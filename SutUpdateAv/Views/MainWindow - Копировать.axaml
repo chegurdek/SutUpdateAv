@@ -1,0 +1,145 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SutUpdateAv.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SutUpdateAv.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+         WindowStartupLocation="CenterScreen"
+           WindowState="Maximized"
+        Title="Управление обновлениями">
+
+
+  <!--x:DataType="vm:MainWindowViewModel"-->
+  
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+  
+  <!--<Window.Resources>
+    --><!--<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>--><!--
+    <Style x:Key="WrappedColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>-->
+
+  <!--<DataGridTextColumn  Binding="{Binding Path=Id}"  Width="77" Header="Номер обновления"  />
+        <DataGridTextColumn  Binding="{Binding Path=Name}" Header="Наименование обновления" Width="100" />
+        <DataGridTextColumn  Binding="{Binding Path=Description}" Header="Описание обновления" Width="100"/>
+        <DataGridTextColumn  Binding="{Binding Path=FileName}" Header="Имя файла архива обновления"/>
+        <DataGridTextColumn  Binding="{Binding Path=CreateDate, StringFormat= \{0:dd.MM.yy HH:mm:ss\}}"  Width="100" Header="Дата и время создания"/>
+        <DataGridTextColumn  Binding="{Binding Path=CreateDateByUser}"  Width="100" Header="Подльзователь СУТ, создавший обновление"/>-->
+
+  <!--SelectionMode="Single"
+      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+      ContextMenuOpening="ContextMenu_ContextMenuOpening" AutoGenerateColumns="False" IsReadOnly="True"
+      MouseDoubleClick="dtGridUpdateItems_MouseDoubleClick"-->
+  <!--x:DataType="mdls:UpdateItem"-->
+
+
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="25"/>
+      <RowDefinition Height="50"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!--Unchecked="chkBoxDisplayUnused_Checked"   Checked="chkBoxDisplayUnused_Checked"-->
+    <Button Content="Добавить обновление" Name="btnAddUpdt" 
+            Click="btnAddUpdt_Click" HorizontalAlignment="Left" Margin="10,10,0,0" 
+            Grid.Row="1" VerticalAlignment="Top" Width="191"/>
+    <CheckBox Name="chkBoxDisplayUnused" Content="Отображать неиспользуемые"  Command="{Binding IsDisplayUnusedCommand}" 
+            
+              HorizontalAlignment="Left" Margin="262,15,0,0" Grid.Row="1" VerticalAlignment="Top" Width="227"/>
+    <!--Click="chkBoxIsDisabled_Checked"-->
+    <!--<Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>-->
+      <!--ColumnWidth="*"-->
+    <!--x:DataType="mdls:UpdateItem"-->
+    <!--ItemsSource="{Binding UpdtItems}"-->
+
+    <DataGrid Name="dtGridUpdateItems"   Grid.Row="2"  AutoGenerateColumns="False"  
+        ItemsSource="{Binding  UpdateItems}"
+            GridLinesVisibility="All"
+                CanUserReorderColumns="True"
+                  CanUserResizeColumns="True" >
+      <DataGrid.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+        </Style>
+      </DataGrid.Styles>
+
+
+      <DataGrid.ContextMenu>
+        <ContextMenu Name="gridUpdtCntxMenu" >
+          <MenuItem Name="addMenuItem" Header="Назначить"  ></MenuItem>
+          <MenuItem Name="viewMenuItem" Header="Просмотр" ></MenuItem>
+          <MenuItem Name="deleteMenuItem"  Header="Удалить" ></MenuItem>
+          <!--<MenuItem Name="deleteMenuItem"  Visibility="{Binding IsVis, Converter={StaticResource BooleanToVisibilityConverter}}" Header="Удалить" Click="cntxMenuItem_Click"></MenuItem>-->
+        </ContextMenu>
+      </DataGrid.ContextMenu>
+      <DataGrid.Columns >
+        <DataGridTextColumn  Binding="{Binding Id}"  Width="77" Header="Номер обновления"  />
+        <DataGridTextColumn  Binding="{Binding Name}" Header="Наименование обновления" Width="100" />
+        <DataGridTextColumn  Binding="{Binding Description}" Header="Описание обновления" Width="100"/>
+        <DataGridTextColumn  Binding="{Binding FileName}" Header="Имя файла архива обновления"/>
+        <DataGridTextColumn  Binding="{Binding CreateDate, StringFormat= \{0:dd.MM.yy HH:mm:ss\}}"  Width="100" Header="Дата и время создания"/>
+        <DataGridTextColumn  Binding="{Binding CreateDateByUser}"  Width="100" Header="Подльзователь СУТ, создавший обновление"/>
+   
+
+        <DataGridTemplateColumn Header="Не использовать" >
+          <DataGridTemplateColumn.CellTemplate>
+           <DataTemplate  >
+             <CheckBox Name="chkBoxIsDisabled"  Click="chkBoxIsDisabled_Checked"   
+                       HorizontalAlignment="Center" VerticalAlignment="Center"  
+                       IsChecked="{Binding Path=IsDisabled,  Mode=TwoWay}"></CheckBox>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <!--IsChecked="{Binding Path=IsDisabled,  Mode=TwoWay}"/>-->
+  
+
+        <DataGridTextColumn Binding="{Binding Path=SoName}" Width="50" Header="Код ПО"/>
+        <DataGridTextColumn  Binding="{Binding Path=IsAppointed}" Header="Назначено"/>
+
+        <DataGridTemplateColumn   Header="Назначить">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button x:Name="btnAddFact" Content="Назначить"  HorizontalAlignment="Center"
+                            Click="btnAddFact_Click" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn   Header="Просмотр">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button x:Name="btnViewFact" Content="Просмотр"  HorizontalAlignment="Center"
+                            Click="btnViewFact_Click" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn   Header="Удалить" >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button x:Name="btnDelUpdt" Content="Удалить"  HorizontalAlignment="Center"
+                            Click="btnDelFact_Click"
+                            />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+    
+    
+    </Grid>
+</Window>

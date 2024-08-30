@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+      
+        x:Class="SutUpdateAv.LoginWindow"
+          Title="Авторизация" Height="300" Width="400"  CanResize="False">
+  <!--DataContext="{Binding LoginWindowViewMode}"-->
+
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition  Height="*"/>
+      <RowDefinition  Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+
+
+
+      <!--Text="{Binding DataSource}"-->
+
+
+     <Label Content="Провайдер" Grid.Row="0" Grid.Column="0" FontSize="12"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+     <ComboBox Name="cmbProv"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+
+    <Label Content="Имя сервера" Grid.Row="1"  Grid.Column="0" FontSize="12" HorizontalAlignment="Center"  VerticalAlignment="Center">
+    </Label>
+    <TextBox Name="txtBoxServer"   Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" TextWrapping="Wrap"  Width="120" />
+
+
+    <Label Content="База данных"    Grid.Row="2" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+    </Label>
+    <TextBox Name="txtBoxDb" Grid.Row="2"  Grid.Column="1" HorizontalAlignment="Center" FontSize="12"   TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+    </TextBox>
+
+    <Label Content="Имя пользователя"    Grid.Row="3" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+    </Label>
+    <TextBox Name="txtBoxLogin"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" FontSize="12"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+    </TextBox>
+
+    <Label Content="Пароль" Grid.Row="4"  Grid.Column="0" FontSize="12" HorizontalAlignment="Center"  VerticalAlignment="Center" >
+    </Label>
+    <TextBox Name="txtBoxPass"   Grid.Row="4"  Grid.Column="1" HorizontalAlignment="Center" FontSize="12"   VerticalAlignment="Center" Width="120">
+    </TextBox>
+
+    <Button Name="btnOk" Grid.Row="5" Grid.Column="0"  Content="OK"  Click="btnOk_Click" HorizontalAlignment="Center" FontSize="12" VerticalAlignment="Center" Width="72"/>
+    <Button Name="btnCancel"  Grid.Row="5" Grid.Column="1"  Content="Отмена" Click="btnCancel_Click"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="12" Width="72"/>
+  </Grid>
+
+
+</Window>

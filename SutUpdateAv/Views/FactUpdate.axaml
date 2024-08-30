@@ -1,0 +1,125 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SutUpdateAv.FactUpdate"
+          xmlns:mdls="using:SutUpdateAv.Models"
+        Title="FactUpdate">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50"/>
+      <RowDefinition Height="170"/>
+      <RowDefinition  Height="*"/>
+      <RowDefinition  Height="50"/>
+    </Grid.RowDefinitions>
+    <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Margin="32,48,0,0" VerticalAlignment="Top" Width="140"/>
+    <!--<GroupBox x:Name="grpBoxUpdateCondit" Header="Условия обновления" Margin="0,43,0,0" Grid.RowSpan="2">-->
+      
+      <Grid RenderTransformOrigin="0.499,0.461">
+
+
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="200"/>
+          <ColumnDefinition Width="250"/>
+          <ColumnDefinition Width="100"/>
+          <ColumnDefinition Width="221*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--DisplayMemberPath="Value"-->
+        <!--SelectedValuePath="Id"-->
+        <ComboBox x:Name="cmbLines" SelectedIndex="0" HorizontalAlignment="Center" Margin="0,0,0,7" Width="242" Height="22" Grid.Column="1"
+             >
+     
+        </ComboBox>
+        <!--SelectedValuePath="Id"-->
+        <ComboBox x:Name="cmbVest" SelectedIndex="0" HorizontalAlignment="Center" Margin="0,0,0,7" Width="242" Height="22" Grid.Row="1"
+              Grid.Column="1" />
+        <Label Content="Линии" HorizontalAlignment="Left" Margin="29,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Вестибюль" HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="1" VerticalAlignment="Center" RenderTransformOrigin="0.579,0.143"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="29,3,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.579,0.143"/>
+        <Label Width="85" VerticalAlignment="Top" RenderTransformOrigin="0.632,0.618" Margin="5,0,0,0" HorizontalAlignment="Left"
+               Grid.Column="2" Grid.RowSpan="3" Height="66">
+          <TextBlock TextWrapping="WrapWithOverflow" >
+            Дата и время доступности обновления
+          </TextBlock>
+        </Label>
+        <!--<wpfx:DateTimePicker Height="25" HorizontalAlignment="Left" Margin="10,0,0,0" x:Name="dtPickerAccessUpdate" 
+                     VerticalAlignment="Center" Width="209" CultureInfo="ru-RU" Grid.Column="3"  />-->
+        <DatePicker Height="25" HorizontalAlignment="Left" Margin="10,0,0,0" x:Name="dtPickerAccessUpdate"
+             VerticalAlignment="Center" Width="209"  Grid.Column="3"  />
+
+ 
+        <CheckBox Content="Принудительное обновление" Grid.Column="3" Name="chkBoxIsForceRefr"
+            HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Width="218" RenderTransformOrigin="0.439,0.024" Margin="10,0,0,0" Height="21"/>
+        <ComboBox Name="cmdChekViewDev" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3"  
+                  VerticalAlignment="Center" Width="242" SelectedIndex="0" Height="22"  />
+        <Label Content="Группа вестибюлей" HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="128"/>
+        <ComboBox Grid.Column="1" Name="cmbGroupVest" HorizontalAlignment="Center" SelectedIndex="0"
+                  Grid.Row="2" VerticalAlignment="Center" Width="241"/>
+        <Label Content="Режим просмотра" HorizontalAlignment="Left"  Margin="29,3,0,2" Grid.Row="3" Width="128" RenderTransformOrigin="0.539,0.297"/>
+ 
+        <Button x:Name="btnAdd" Content="Назначить" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" 
+                Click="btnAdd_Click" Width="242" Grid.Column="1"/>
+
+      </Grid>
+
+    <!--<wpfx:MaskedTextBox Name="mskTxtTime" Mask="00:00" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,0,0" Text="TextBox"
+               VerticalAlignment="Top" Width="38" Grid.Row="1"/>-->
+    
+    
+
+    <!--</GroupBox>-->
+
+    <DataGrid  x:Name="dtGridCheckDevices"
+               VerticalAlignment="Stretch" AutoGenerateColumns="False"  HorizontalAlignment="Stretch"
+               IsReadOnly="True" Grid.Row="2" x:DataType="mdls:DeviceItem" >
+      <DataGrid.Columns>
+        <DataGridTemplateColumn>
+          <DataGridTemplateColumn.Header>
+            <StackPanel Orientation="Horizontal">
+              <CheckBox Name="chkSelectAll"
+                    IsChecked="True" Margin="0,6,0,0" Click="chkSelectAll_Click" />
+              <Label Content="Выбрать все/снять все" ></Label>
+            </StackPanel>
+          </DataGridTemplateColumn.Header>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+
+              <!--IsChecked="{Binding IsCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+              <CheckBox Unchecked="chkDev_Unchecked"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                       />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Binding="{Binding DevOriginalCode}"   Header="Номер турникета"  Width="70"/>
+        <!--<DataGridTextColumn Binding="{Binding HexSn}" Header="Номер терминала"/>-->
+        <DataGridTextColumn Binding="{Binding HexSn}"  Header="Cерийный номер"  Width="70"/>
+        <DataGridTextColumn Binding="{Binding DevId}"   Header="Код устройства"  Width="72"/>
+        <DataGridTextColumn Binding="{Binding DevStationId}" Header="Код вестибюля"/>
+        <DataGridTextColumn Binding="{Binding StationName}" Header="Название вестибюля"/>
+        <DataGridTextColumn Binding="{Binding CmptName}" Header="Тип устройства"/>
+        <DataGridTextColumn Binding="{Binding CmpName}" Header="Название устройства"/>
+        <DataGridTextColumn Binding="{Binding DevSoftwareVer}" Header="Версия ПО"/>
+
+        <!--<DataGridTextColumn Binding="{Binding DevId}" Header="№ устр-ва АСКОПМ"/>-->
+
+
+      </DataGrid.Columns>
+    </DataGrid>
+    <Label x:Name="lblNameUpdt" Content="Обновление: " HorizontalAlignment="Left" Margin="32,0,0,0" VerticalAlignment="Center" Width="353"/>
+    <Label x:Name="lblCodeUpdt" Content="Номер обновления: " HorizontalAlignment="Left" Margin="426,0,0,0" VerticalAlignment="Center" Width="154"/>
+    <Button x:Name="btnCancel" Content="Отмена" HorizontalAlignment="Left" Margin="799,0,0,0" Grid.Row="3" VerticalAlignment="Center" Click="btnCancel_Click" Width="118"/>
+    <Button x:Name="btnView"  Content="Перечитать" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" RenderTransformOrigin="1.129,0.095" Height="23" Width="118" Click="btnView_Click" Grid.Row="3" Margin="43,9,0,0"/>
+
+  </Grid>
+  
+</Window>

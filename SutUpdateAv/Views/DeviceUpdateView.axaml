@@ -1,0 +1,118 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SutUpdateAv.ViewModels"
+        xmlns:int="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:b ="clr-namespace:Avalonia.Xaml.Behaviors.DataTriggerBehavior; assembly=Avalonia.Xaml.Behaviors"   
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+         WindowStartupLocation="CenterScreen"
+        x:Class="SutUpdateAv.DeviceUpdateView"
+        xmlns:mdls="using:SutUpdateAv.Models"
+        x:DataType="vm:DeviceUpdateViewViewModel"
+        Title="DeviceUpdateView"
+        Name="WndDeviceUpdateView">
+
+  <!-- x:CompileBindings="True"-->
+
+  <!--<Design.DataContext>
+    <vm:DeviceUpdateViewViewModel/>
+  </Design.DataContext>-->
+
+  <Grid>
+    <Menu Margin="0,0,0,0" Grid.Row="0" Grid.ColumnSpan="5" VerticalAlignment="Top">
+      <MenuItem Header="Файл">
+        <MenuItem Header="Закрыть"  Name="ExitMenuItem" Click="MenuItem_Click"></MenuItem>
+      </MenuItem>
+    </Menu>
+
+
+    <!--<Button
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Background="#232323"
+                Command="{Binding DeleteClickCommand}"
+                CommandParameter="1111"
+                IsEnabled="True"
+                Content="View"
+                Foreground="White" />-->
+    <!--IsReadOnly="True"-->
+
+    <DataGrid Name="dtGridDeviceUpdateItems" HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch" 
+              Grid.Row="2" 
+              AutoGenerateColumns="False" 
+             
+              ItemsSource="{Binding DeviceUpdateItems, Mode=TwoWay}">
+
+
+
+      <DataGrid.ContextMenu>
+        <ContextMenu Name="gridCntxMenu" >
+          <MenuItem Name="delSelectedMenu" Header="Удалить выбранные"  IsEnabled="True" 
+                    Command="{Binding DeleteSelectedCommand}" 
+                    CommandParameter="{Binding ElementName=dtGridDeviceUpdateItems}" >
+          </MenuItem>
+        </ContextMenu>
+      </DataGrid.ContextMenu>
+      <DataGrid.Columns>
+        <DataGridTextColumn  Binding="{Binding Path=VestName}" Header="Вестибюль"/>
+        <DataGridTextColumn  Binding="{Binding Path=TurNum}" Width="70" Header="Номер турникета"/>
+        <DataGridTextColumn  Binding="{Binding Path=Status}"   Header="Статус"/>
+        <DataGridTextColumn 
+                            Binding="{Binding Path=CreateDateTime, StringFormat= \{0:dd.MM.yy HH:mm:ss\}}"  Header="Дата назначения"/>
+        <DataGridTextColumn  Binding="{Binding Path=SatusDateTime, StringFormat= \{0:dd.MM.yy HH:mm:ss\}}" Header="Дата статуса"/>
+        <DataGridTextColumn Binding="{Binding Path=FromDateTime, 
+                    StringFormat= \{0:dd.MM.yy HH:mm:ss\}}" Header="Дата и время доступности обновления" Width="110"/>
+        <DataGridTextColumn  Binding="{Binding Path=PoCodeName}" Header="Код ПО"  Width="50"/>
+        <DataGridTextColumn  Binding="{Binding Path=HexSn}" Width="70" Header="Серийный номер"/>
+        <DataGridTextColumn  Binding="{Binding Path=DevId}" Width="72" Header="Код устройства"/>
+
+        <DataGridTemplateColumn Width="*" Header="Действие">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate >
+              <Button
+                  HorizontalAlignment="Center"
+                  HorizontalContentAlignment="Center"
+                  Command="{Binding $parent[DataGrid].((vm:DeviceUpdateViewViewModel)DataContext).DeleteClickCommand}"
+                  CommandParameter="{Binding Path=DuId}"
+                   Content="Удалить"
+                  IsEnabled="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <!--<DataGridTemplateColumn   Header="Удалить"  >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate DataType="vm:DeviceUpdateViewViewModel" >
+              --><!--Command="{Binding $parent[DataGrid].((vm:DeviceUpdateViewViewModel).DeleteSelectedCommand}"--><!--
+              --><!--IsVisible="{Binding IsDel, Converter={StaticResource BooleanToVisibilityConverter}}"--><!--
+              --><!--IsVisible="{Binding IsDel, Converter={x:Static BoolConverters.And}}"--><!--
+              --><!--IsVisible="{Binding Path=IsDel, x:Static BoolConverters.And}"--><!--
+              --><!--Command="{Binding (vm:DeviceUpdateViewViewModel).DeleteSelectedCommand}"--><!--
+              --><!--Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl},Mode=FindAncestor},Path=DataContext.OpenItemCommand}">--><!--
+              --><!--Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window},Mode=FindAncestor},Path=DataContext.DeleteSelectedCommand}"--><!--
+                --><!--Command="{ReflectionBinding WndDeviceUpdateView.DataContext.DeleteSelectedCommand}"--><!--
+              --><!--CommandParameter="{Binding Path=DuId}"--><!--
+              <Button x:Name="btnDelUpdt"  Content="Удалить"  HorizontalAlignment="Center" IsEnabled="True" Command="{Binding Path=DeleteSelectedCommand}">
+                </Button>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>-->
+      </DataGrid.Columns>
+    </DataGrid>
+    
+    <Label x:Name="lblNameUpdt" Content="Обновление: " HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="353" Grid.Row="1"/>
+    <Label x:Name="lblCodeUpdt" Content="Номер обновления: " HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
+    <Button Content="Перечитать" Name="btnRefresh" HorizontalAlignment="Left"
+            Margin="640,10,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.493,0.067" Width="95"/>
+    <!--Click="btnRefresh_Click"-->
+    <Grid.RowDefinitions>
+      <RowDefinition Height="25"/>
+      <RowDefinition Height="50"/>
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+  </Grid>
+  
+
+</Window>
